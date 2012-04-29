@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Verbindung+</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    </head>
+    <body>
+        <div id="continer">
+            <span id="head">
+                <br>
+                <img src="../images/header.png">
+                <p><strong>あなただけの公開プロフィールを簡単に作成、共有する</strong></p>
+            </span>
+                <div id="content">
+                    <div id="content_inner">
+                        <span id="mi"><strong>Verbindung+ API (for developer)</strong></span><br>
+                        <span id="inner"><ul>
+                            開発者向けのAPIについてのページです。<br>
+                            Verbindung+の提供しているAPIを使用すると、Verbindung+ユーザーの情報が取得できます。<br>
+                            HTTP GETメソッドを使用してVerbindung+ APIにリクエストを行ってください。<br><br>
+                            
+                            <span id="mi">対応レスポンス形式</span><br>
+                                <blockquote>
+                                    *XML (Extensible Markup Language)<br>
+                                    *JSON (JavaScript Object Notation)<br>
+                                    *JSONP (JSON with padding)
+                                </blockquote>
+                            <span id="mi">XMLでのデータの受け取り</span><br>
+                                リクエストURIは以下の通りです
+                                <blockquote><strong>http://api.verbindung.me/req.php?id=[user_id]&format=xml</strong><br>
+                                [user_id] - Verbindung+のユーザーID</blockquote>
+                                上のURIを使ってリクエストを送信すると、XML形式でサーバより以下のようなレスポンスが帰ってきます。<br>
+                                cluterと、WebService->servicesと、Etc->title、Etc->linkはコンマで順に区切られて<br>
+                                一つの文字列になっているので、開発者側でsplit(",");するなりで対応お願いします。
+                                <blockquote><pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;Verbindung&gt;
+    &lt;user_id&gt;ユーザーID&lt;/user_id&gt;
+    &lt;user_screen_name&gt;表示名&lt;/user_screen_name&gt;
+    &lt;work&gt;勤務先&lt;/work&gt;
+    &lt;live&gt;居住地&lt;/live&gt;
+    &lt;cluster&gt;クラスタ&lt;/cluster&gt;
+    &lt;comment&gt;一言コメント&lt;/comment&gt;
+    
+    &lt;Vote&gt;
+        &lt;count&gt;拍手回数&lt;/count&gt;
+    &lt;/Vote&gt;
+    &lt;WebService&gt;
+        &lt;services&gt;参加中のWebサービス一覧&lt;/services&gt;
+    &lt;/WebService&gt;
+    &lt;Etc&gt;
+        &lt;title&gt;リンクのタイトル&lt;/title&gt;
+        &lt;link&gt;リンクのURL&lt;/link&gt;
+    &lt;/Etc&gt;
+&lt;/Verbindung&gt;</pre></blockquote>
+                            
+                            <span id="mi">JSONでのデータの受け取り</span><br>
+                            リクエストURIは以下の通りです
+                            <blockquote>
+                                <strong>http://api.verbindung.me/r.php?id=[user_id]&format=json</strong><br>
+                                [user_id] - Verbindung+のユーザーID
+                            </blockquote>
+                            XML版と同様にverbindung.cluster、verbindung.webservice.services、<br>
+                            verbindung.etc.title、verbindung.etc.linkはコンマ順に区切られています。以下レスポンス例です。<br>
+                            <blockquote><pre>{"verbindung":
+    {
+        "user_id":"ユーザーID",
+        "user_screen_name":"表示名",
+        "work":"勤務先",
+        "live":"居住地",
+        "cluster":"クラスタ",
+        "comment":"一言コメント",
+        
+        {"vote":{"count":"拍手回数",}},
+        {"webservice":{"services":"参加中のWebサービス一覧,}},
+        
+        {"etc":
+            {
+            "title":"リンクのタイトル",
+            "link":"リンクのURL",
+            }
+        }
+    }
+}</pre></blockquote>
+                            <span id="mi">JSONPでのデータの受け取り</span><br>
+                            リクエストURIは以下の通りです
+                            <blockquote>
+                                <strong>http://api.verbindung.me/r.php?id=[user_id]&format=jsonp&callback=[callback_f]</strong><br>
+                                [user_id] - Verbindung+のユーザーID<br>
+                                [callback_f] - コールバック関数
+                            </blockquote>
+                            データ構造は基本的にはJSONの構造と同じです。<br>
+                            JavaScriptのみで受け取りたい場合以下のコードでVerbindung+ APIをコールすることができます。
+                        </span>
+                        <blockquote><pre>var u = &quot;http://api.verbindung.me/r.php?id=sample&amp;format=jsonp&amp;callback=callback&quot;;
+var s = document.createElement(&quot;script&quot;);
+s.type=&quot;text/javascript&quot;;
+s.src = u;
+s.charset=&quot;utf-8&quot;;
+document.body.appendChild(s);
+
+function callback(p) {
+    //いろいろ
+}</pre></blockquote>
+                        <span id="mi">有志らによるクラスライブラリ等の作成について</span><br>
+                        僕たちは、クラスライブラリやモジュールの作成については歓迎し、<br>できる限りそれを使っていただき
+                        開発効率を上げていただきたいと思っています。<br>
+                        ということで、クラスライブラリやモジュール等を作成された方は<br>Twitterアカウント<a href="http://twitter.com/sn0wnight">@Sn0wNight</a>へリプライを頂ければ、Verbindung+のサイト上に掲載します。
+                        <br><br>
+                    </div>
+                    <a href="index.php" class="super button blue" style="border:0;">　<< TOPページへ戻る　</a>
+                    <a href="library.html" class="super button pink" style="border:0;"> 　>> ライブラリ一覧　</a>
+                        <br><br><br>
+                </div>
+            </span>
+        </div>
+    </body>
+</html>
