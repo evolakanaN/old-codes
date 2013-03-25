@@ -1,4 +1,4 @@
-# ruby terrorism.rb Sn0wNight
+# ruby terrorism.rb tenri_LOVE86
 (通常モード、引数に渡せるのは一つのIDだけで渡したIDのユーザーのつぶやきをリアルタイムでふぁぼる
 # ruby terrorism.rb [Sn0wNight,KOBA789,haretter,xrekkusu]
 (通常複数モード、[]の中に複数のIDを指定して、その指定したIDのユーザーがつぶやいたらふぁぼる
